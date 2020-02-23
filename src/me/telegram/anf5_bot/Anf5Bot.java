@@ -1,14 +1,12 @@
 package me.telegram.anf5_bot;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import me.telegram.anf5_bot.Utils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 
@@ -20,11 +18,11 @@ public class Anf5Bot {
         apiUrl += token;
     }
 
-    private Connection.Response sendMessage(int chatId, String text) throws IOException {
-        return sendMessage(Integer.toString(chatId), text);
+    private void sendMessage(int chatId, String text) {
+        sendMessage(Integer.toString(chatId), text);
     }
 
-    private Connection.Response sendMessage(String chatId, String text) throws IOException {
+    private void sendMessage(String chatId, String text) {
         String[] data = {
             "chat_id", chatId,
             "parse_mode", "HTML",
@@ -32,18 +30,17 @@ public class Anf5Bot {
             "text", text
         };
 
-        return Utils.sendPost(apiUrl + "/sendMessage", data);   
+        Utils.sendPost(apiUrl + "/sendMessage", data);
     }
 
-    private Connection.Response getUpdates(int offset) throws IOException {
+    private Connection.Response getUpdates(int offset) {
         return Utils.sendPost(apiUrl + "/getUpdates",
                               "offset=" + Integer.toString(offset));
     }
 
-    public void start() throws JSONException, IOException {
-        int last_update_id = 0;
-
+    public void start() {
         Connection.Response response;
+        int last_update_id = 0;
 
         while (true) {
             response = getUpdates(last_update_id++);
@@ -98,7 +95,7 @@ public class Anf5Bot {
                 if (text.startsWith("/start")) {
                     sendMessage(chat_id, LangData.IM_READY);
                 } else if (text.startsWith("/getlastposts")) {
-                    sendLastPosts(chat_id, 5);
+                    sendLastPosts(chat_id, 30);
                 }
 
                 Logger.addLog(
@@ -116,7 +113,7 @@ public class Anf5Bot {
         }
     }
 
-    private void sendLastPosts(String chatId, int limit) throws IOException {
+    private void sendLastPosts(String chatId, int limit) {
         List<ApiData> list = new ArrayList<>();
 
         list = Api.getLastPosts(limit);
@@ -126,11 +123,6 @@ public class Anf5Bot {
             String text = list.get(i).getText();
             int postId = list.get(i).getPostId();
             String postLink = "<a href=\"" + Api.URL + "/forum/post" + postId + "\">";
-
-            if (text.length() > 300) {
-                text = text.substring(0, 300) + "... "
-                    + postLink + LangData.READ_MORE + "</a>";
-            }
 
             result =
                 "<b># " + list.get(i).getTitle() + "\n\n"
@@ -148,7 +140,7 @@ public class Anf5Bot {
         }
     }
 
-    private void sendLastPosts(int chatId, int limit) throws IOException {
+    private void sendLastPosts(int chatId, int limit) {
         sendLastPosts(Integer.toString(chatId), limit);
     }
 }

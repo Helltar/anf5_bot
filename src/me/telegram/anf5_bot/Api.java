@@ -1,6 +1,5 @@
 package me.telegram.anf5_bot;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
@@ -18,13 +17,7 @@ public class Api {
             "limit", Integer.toString(limit)
         };
 
-        String jData = "";
-
-        try {
-            jData = Utils.sendPost(URL_API + "forum/last_posts", data).body();
-        } catch (IOException e) {
-            Logger.addLog(e);
-        }
+        String jData = Utils.sendPost(URL_API + "forum/last_posts", data).body();
 
         List<ApiData> lastPostsList = new ArrayList<>();
 
@@ -54,4 +47,3 @@ public class Api {
         return getLastPosts(1).get(0).getPostId();
     }
 }
-
