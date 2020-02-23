@@ -60,7 +60,7 @@ public class Anf5Bot {
                     Utils.setLineToFile(lastPostId, lastIdFilename);
                 }
             } else {
-                sendLastPosts(BotConfig.CHANNEL_NAME, 5);
+                sendLastPosts(BotConfig.CHANNEL_NAME, 20);
                 Utils.setLineToFile(lastPostId, lastIdFilename);
             }
 
@@ -95,7 +95,7 @@ public class Anf5Bot {
                 if (text.startsWith("/start")) {
                     sendMessage(chat_id, LangData.IM_READY);
                 } else if (text.startsWith("/getlastposts")) {
-                    sendLastPosts(chat_id, 30);
+                    sendLastPosts(chat_id, 5);
                 }
 
                 Logger.addLog(
