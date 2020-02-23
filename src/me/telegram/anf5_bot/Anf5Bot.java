@@ -58,7 +58,7 @@ public class Anf5Bot {
             if (new File(lastIdFilename).exists()) {
                 int lastId = Utils.getIntFromFile(lastIdFilename);
 
-                if (lastId != lastPostId) {
+                if (lastId < lastPostId) {
                     sendLastPosts(BotConfig.CHANNEL_NAME, 1);
                     Utils.setLineToFile(lastPostId, lastIdFilename);
                 }
