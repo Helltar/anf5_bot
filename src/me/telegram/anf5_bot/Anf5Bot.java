@@ -84,14 +84,14 @@ public class Anf5Bot {
                 JSONObject message = responses
                     .getJSONObject(i)
                     .getJSONObject("message");
-                    
+
                 JSONObject chat = message.getJSONObject("chat");
 
                 int chat_id = chat.getInt("id");
-                
+
                 String username = chat.has("username") ?
                     chat.getString("username") : "null";
-                    
+
                 String text = message.has("text") ?
                     message.getString("text") : "null";
 
@@ -125,17 +125,17 @@ public class Anf5Bot {
         for (int i = 0; i < list.size(); i++) {
             String text = list.get(i).getText();
             int postId = list.get(i).getPostId();
+            String postLink = "<a href=\"" + Api.URL + "/forum/post" + postId + "\">";
 
             if (text.length() > 300) {
-                text = text.substring(0, 300)
-                    + "... <a href=\"" + Api.URL + "/forum/post"
-                    + postId + "\">" + LangData.READ_MORE + "</a>";
+                text = text.substring(0, 300) + "... "
+                    + postLink + LangData.READ_MORE + "</a>";
             }
 
-            result = "<b># " + list.get(i).getTitle() + "\n\n"
+            result =
+                "<b># " + list.get(i).getTitle() + "\n\n"
                 + list.get(i).getUsername() + "</b> "
-                + "<a href=\"" + Api.URL + "/forum/post"
-                + postId + "\">#"
+                + postLink + "#"
                 + postId + "</a>\n\n"
                 + text;
 
@@ -152,4 +152,3 @@ public class Anf5Bot {
         sendLastPosts(Integer.toString(chatId), limit);
     }
 }
-
