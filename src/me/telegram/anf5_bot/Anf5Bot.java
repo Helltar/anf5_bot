@@ -84,17 +84,16 @@ public class Anf5Bot {
                 JSONObject message = responses
                     .getJSONObject(i)
                     .getJSONObject("message");
+                    
+                JSONObject chat = message.getJSONObject("chat");
 
-                int chat_id = message
-                    .getJSONObject("chat")
-                    .getInt("id");
-
-                String username = message
-                    .getJSONObject("chat")
-                    .getString("username");
-
-                String text = message
-                    .getString("text");
+                int chat_id = chat.getInt("id");
+                
+                String username = chat.has("username") ?
+                    chat.getString("username") : "null";
+                    
+                String text = message.has("text") ?
+                    message.getString("text") : "null";
 
                 if (text.startsWith("/start")) {
                     sendMessage(chat_id, LangData.IM_READY);
