@@ -1,6 +1,7 @@
 package me.telegram.anf5_bot;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,10 +31,14 @@ public class Anf5Bot {
             "text", text
         };
 
-        Utils.sendPost(apiUrl + "/sendMessage", data);
+        try {
+            Utils.sendPost(apiUrl + "/sendMessage", data);
+        } catch (IOException e) {
+            Logger.add(e);
+        }
     }
 
-    private Connection.Response getUpdates(int offset) {
+    private Connection.Response getUpdates(int offset) throws IOException {
         return Utils.sendPost(apiUrl + "/getUpdates",
                               "offset=" + Integer.toString(offset));
     }
@@ -43,7 +48,12 @@ public class Anf5Bot {
         int last_update_id = 0;
 
         while (true) {
-            response = getUpdates(last_update_id++);
+            try {
+                response = getUpdates(last_update_id++);
+            } catch (IOException e) {
+                Logger.add(e);
+                continue;
+            }
 
             if (response.statusCode() != 200) {
                 continue;
@@ -98,7 +108,7 @@ public class Anf5Bot {
                     sendLastPosts(chat_id, 5);
                 }
 
-                Logger.addLog(
+                Logger.add(
                     "date: " + new Date().toString() + "\n"
                     + "id: " + chat_id + "\n"
                     + "user: " + username + "\n"
@@ -107,7 +117,7 @@ public class Anf5Bot {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
-                    Logger.addLog(e);
+                    Logger.add(e);
                 }
             }
         }

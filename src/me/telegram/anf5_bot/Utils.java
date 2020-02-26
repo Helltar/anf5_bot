@@ -21,9 +21,9 @@ public class Utils {
             line = reader.readLine();
             reader.close();
         } catch (FileNotFoundException e) {
-            Logger.addLog(e);
+            Logger.add(e);
         } catch (IOException e) {
-            Logger.addLog(e);
+            Logger.add(e);
         }
 
         return line;
@@ -39,9 +39,9 @@ public class Utils {
             writer.println(line);
             writer.close();
         } catch (FileNotFoundException e) {
-            Logger.addLog(e);
+            Logger.add(e);
         } catch (UnsupportedEncodingException e) {
-            Logger.addLog(e);
+            Logger.add(e);
         }
     }
 
@@ -49,25 +49,17 @@ public class Utils {
         setLineToFile(Integer.toString(line), filename);
     }
 
-    public static Connection.Response sendPost(String url, String data) {
+    public static Connection.Response sendPost(String url, String data) throws IOException {
         return sendPost(url, data.split("="));
     }
 
-    public static Connection.Response sendPost(String url, String[] data) {
-        Connection.Response result = null;
-
-        try {
-            return Jsoup
-                .connect(url)
-                .data(data)
-                .method(Connection.Method.POST)
-                .ignoreContentType(true)
-                .execute();
-        } catch (IOException e) {
-            Logger.addLog(e + "\n[data]: " + Arrays.toString(data));
-        }
-
-        return result;
+    public static Connection.Response sendPost(String url, String[] data) throws IOException {
+        return Jsoup
+            .connect(url)
+            .data(data)
+            .method(Connection.Method.POST)
+            .ignoreContentType(true)
+            .execute();
     }
 
     public static String replaceBB(String text) {

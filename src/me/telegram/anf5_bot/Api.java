@@ -5,6 +5,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.IOException;
 
 public class Api {
 
@@ -17,7 +18,13 @@ public class Api {
             "limit", Integer.toString(limit)
         };
 
-        String jData = Utils.sendPost(URL_API + "forum/last_posts", data).body();
+        String jData = "";
+        
+        try {
+            jData = Utils.sendPost(URL_API + "forum/last_posts", data).body();
+        } catch (IOException e) {
+            Logger.add(e);
+        }
 
         List<ApiData> lastPostsList = new ArrayList<>();
 
@@ -37,7 +44,7 @@ public class Api {
                     new ApiData(title,username, text, postId, time));
             }
         } catch (JSONException e) {
-            Logger.addLog(e);
+            Logger.add(e);
         }
 
         return lastPostsList;
