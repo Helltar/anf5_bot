@@ -59,6 +59,7 @@ public class Utils {
             .data(data)
             .method(Connection.Method.POST)
             .ignoreContentType(true)
+            .timeout(0)
             .execute();
     }
 

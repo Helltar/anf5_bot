@@ -113,12 +113,6 @@ public class Anf5Bot {
                     + "id: " + chat_id + "\n"
                     + "user: " + username + "\n"
                     + "text: " + text + "\n");
-
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    Logger.add(e);
-                }
             }
         }
     }
