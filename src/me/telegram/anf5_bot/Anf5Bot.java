@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import me.telegram.anf5_bot.Utils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,7 +48,8 @@ public class Anf5Bot {
 
         while (true) {
             try {
-                response = getUpdates(last_update_id++);
+                response = getUpdates(last_update_id);
+                last_update_id = last_update_id++;
             } catch (IOException e) {
                 Logger.add(e);
                 continue;
@@ -78,7 +78,7 @@ public class Anf5Bot {
                 new JSONObject(response.body())
                 .getJSONArray("result");
 
-            if (responses.isNull(0)) {
+            if (responses.isEmpty()) {
                 continue;
             } else {
                 last_update_id = 
@@ -88,6 +88,10 @@ public class Anf5Bot {
             }
 
             for (int i = 0; i < responses.length(); i++) {
+                if (!responses.getJSONObject(i).has("message")) {
+                    continue;
+                }
+
                 JSONObject message = responses
                     .getJSONObject(i)
                     .getJSONObject("message");
