@@ -78,7 +78,7 @@ public class Anf5Bot {
                 new JSONObject(response.body())
                 .getJSONArray("result");
 
-            if (responses.isEmpty()) {
+            if (responses.isNull(0)) {
                 continue;
             } else {
                 last_update_id = 
