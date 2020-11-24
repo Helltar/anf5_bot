@@ -72,7 +72,7 @@ public class Utils {
             .replaceAll("\\[color=(.*?)\\](.*?)\\[\\/color\\]", "$2")
             .replaceAll("\\[c\\](.*?)\\[\\/c\\]", "<i>" + LangData.QUOTE + ":\n   $1</i>\n\n")
             .replaceAll("\\[url=(.*?)\\](.*?)\\[\\/url\\]", "<a href=\"$1\">$2</a>")
-            .replaceAll("\\[code(.*?)\\](.*?)\\[\\/code\\]", "<pre><code>$2</code></pre>");
-            //.replaceAll("\\[code\\](.*?)\\[\\/code\\]", "<pre><code>$1</code></pre>");
+            .replaceAll("\\[code(.*?)\\](.*?)\\[\\/code\\]", "<pre><code>$2</code></pre>")
+            .replaceAll("\\[youtube\\](.*?)\\[\\/youtube\\]", "$1");
     }
 }
