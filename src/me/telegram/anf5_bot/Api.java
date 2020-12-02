@@ -1,11 +1,11 @@
 package me.telegram.anf5_bot;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.IOException;
 
 public class Api {
 
@@ -19,7 +19,7 @@ public class Api {
         };
 
         String jData = "";
-        
+
         try {
             jData = Utils.sendPost(URL_API + "forum/last_posts", data).body();
         } catch (IOException e) {
@@ -41,7 +41,7 @@ public class Api {
                 int time = jTopic.getInt("time");
 
                 lastPostsList.add(
-                    new ApiData(title,username, text, postId, time));
+                    new ApiData(title, username, text, postId, time));
             }
         } catch (JSONException e) {
             Logger.add(e);

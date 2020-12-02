@@ -27,11 +27,11 @@ public class ApiData {
     public String getText() {
         return text;
     }
-    
+
     public int getPostId() {
         return postId;
     }
-    
+
     public int getTime() {
         return time;
     }
