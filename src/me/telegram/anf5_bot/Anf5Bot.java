@@ -107,7 +107,7 @@ public class Anf5Bot {
                     message.getString("text") : "null";
 
                 if (text.startsWith("/start")) {
-                    sendMessage(chat_id, LangData.IM_READY);
+                    sendMessage(chat_id, "Готов");
                 } else if (text.startsWith("/getlastposts")) {
                     sendLastPosts(chat_id, 5);
                 }
