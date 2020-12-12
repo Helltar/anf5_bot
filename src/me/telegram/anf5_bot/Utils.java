@@ -74,6 +74,7 @@ public class Utils {
             .replaceAll("\\[code(.*?)\\](.*?)\\[\\/code\\]", "<pre><code>$2</code></pre>")
             .replaceAll("\\[youtube\\](.*?)\\[\\/youtube\\]", "$1")
             .replaceAll("\\[spoiler\\](.*?)\\[\\/spoiler\\]", "$1")
-            .replaceAll("\\[spoiler=(.*?)\\](.*?)\\[\\/spoiler\\]", "$1 : $2");
+            .replaceAll("\\[spoiler=(.*?)\\](.*?)\\[\\/spoiler\\]", "$1 : $2")
+            .replaceAll("\\[img\\](.*?)\\[\\/img\\]", "$1");
     }
 }
