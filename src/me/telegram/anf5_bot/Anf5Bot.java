@@ -44,7 +44,9 @@ public class Anf5Bot {
 
     public void start() {
         Connection.Response response;
+
         int last_update_id = 0;
+        int lastPostId = 0;
 
         while (true) {
             try {
@@ -60,7 +62,13 @@ public class Anf5Bot {
             }
 
             String lastIdFilename = BotConfig.LAST_ID_FILENAME;
-            int lastPostId = Api.getLastPostId();
+
+            try {
+                lastPostId = Api.getLastPostId();
+            } catch (IOException e) {
+                Logger.add(e);
+                continue;
+            }
 
             if (new File(lastIdFilename).exists()) {
                 int lastId = Utils.getIntFromFile(lastIdFilename);
@@ -124,7 +132,12 @@ public class Anf5Bot {
     private void sendLastPosts(String chatId, int limit) {
         List<ApiData> list = new ArrayList<>();
 
-        list = Api.getLastPosts(limit);
+        try {
+            list = Api.getLastPosts(limit);
+        } catch (IOException e) {
+            Logger.add(e);
+        }
+
         String result = "";
 
         for (int i = 0; i < list.size(); i++) {
