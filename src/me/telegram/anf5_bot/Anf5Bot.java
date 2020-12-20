@@ -38,8 +38,7 @@ public class Anf5Bot {
     }
 
     private Connection.Response getUpdates(int offset) throws IOException {
-        return Utils.sendPost(apiUrl + "/getUpdates",
-                              "offset=" + Integer.toString(offset));
+        return Utils.sendPost(apiUrl + "/getUpdates", "offset=" + Integer.toString(offset));
     }
 
     public void start() {
@@ -47,6 +46,8 @@ public class Anf5Bot {
 
         int last_update_id = 0;
         int lastPostId = 0;
+
+        Logger.add("bot start ...");
 
         while (true) {
             try {
@@ -78,21 +79,16 @@ public class Anf5Bot {
                     Utils.setLineToFile(lastPostId, lastIdFilename);
                 }
             } else {
-                sendLastPosts(BotConfig.CHANNEL_NAME, 20);
+                sendLastPosts(BotConfig.CHANNEL_NAME, 5);
                 Utils.setLineToFile(lastPostId, lastIdFilename);
             }
 
-            JSONArray responses =
-                new JSONObject(response.body())
-                .getJSONArray("result");
+            JSONArray responses = new JSONObject(response.body()).getJSONArray("result");
 
             if (responses.isEmpty()) {
                 continue;
             } else {
-                last_update_id = 
-                    responses
-                    .getJSONObject(responses.length() - 1)
-                    .getInt("update_id") + 1;
+                last_update_id = responses.getJSONObject(responses.length() - 1).getInt("update_id") + 1;
             }
 
             for (int i = 0; i < responses.length(); i++) {
@@ -100,19 +96,11 @@ public class Anf5Bot {
                     continue;
                 }
 
-                JSONObject message = responses
-                    .getJSONObject(i)
-                    .getJSONObject("message");
-
+                JSONObject message = responses.getJSONObject(i).getJSONObject("message");
                 JSONObject chat = message.getJSONObject("chat");
 
                 int chat_id = chat.getInt("id");
-
-                String username = chat.has("username") ?
-                    chat.getString("username") : "null";
-
-                String text = message.has("text") ?
-                    message.getString("text") : "null";
+                String text = message.has("text") ? message.getString("text") : "null";
 
                 if (text.startsWith("/start")) {
                     sendMessage(chat_id, "Готов");
@@ -120,11 +108,10 @@ public class Anf5Bot {
                     sendLastPosts(chat_id, 5);
                 }
 
-                Logger.add(
-                    "date: " + new Date().toString() + "\n"
-                    + "id: " + chat_id + "\n"
-                    + "user: " + username + "\n"
-                    + "text: " + text + "\n");
+                Logger.add("date: " + new Date().toString() + "\n"
+                           + "id: " + chat_id + "\n"
+                           + "user: " + (chat.has("username") ? chat.getString("username") : "null") + "\n"
+                           + "text: " + text + "\n");
             }
         }
     }
@@ -145,17 +132,13 @@ public class Anf5Bot {
             int postId = list.get(i).getPostId();
             String postLink = "<a href=\"" + Api.URL + "/forum/post" + postId + "\">";
 
-            result =
-                "<b># " + list.get(i).getTitle() + "\n\n"
+            result = "<b># " + list.get(i).getTitle() + "\n\n"
                 + list.get(i).getUsername() + "</b> "
                 + postLink + "#"
                 + postId + "</a>\n\n"
                 + text;
 
-            result = 
-                StringEscapeUtils.unescapeHtml4(
-                StringEscapeUtils.unescapeHtml3(
-                    Utils.replaceBB(result)));
+            result = StringEscapeUtils.unescapeHtml4(StringEscapeUtils.unescapeHtml3(Utils.replaceBB(result)));
 
             sendMessage(chatId, result);
         }
