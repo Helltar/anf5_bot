@@ -72,7 +72,7 @@ public class Utils {
             .replaceAll("\\[color=(.*?)\\](.*?)\\[\\/color\\]", "$2")
             .replaceAll("\\[c\\](.*?)\\[\\/c\\]", "<i>цитата:\n   $1</i>\n")
             .replaceAll("\\[url=(.*?)\\](.*?)\\[\\/url\\]", "<a href=\"$1\">$2</a>")
-            .replaceAll("\\[code\\](.*?)\\[\\/code\\]", "<pre><code>$2</code></pre>")
+            .replaceAll("\\[code\\](.*?)\\[\\/code\\]", "<pre><code>$1</code></pre>")
             .replaceAll("\\[code (.*?)\\](.*?)\\[\\/code\\]", "<pre><code>$2</code></pre>")
             .replaceAll("\\[youtube\\](.*?)\\[\\/youtube\\]", "$1")
             .replaceAll("\\[spoiler\\](.*?)\\[\\/spoiler\\]", "$1")
