@@ -68,19 +68,21 @@ public class Utils {
 
         return text
             .replaceAll("\\[b\\]"+ pat +"\\[\\/b\\]", "<b>$1</b>")
+            .replaceAll("\\[c\\]"+ pat +"\\[\\/c\\]", "<i>Цитата:\n   $1</i>\n")
             .replaceAll("\\[i\\]"+ pat +"\\[\\/i\\]", "$1")
             .replaceAll("\\[s\\]"+ pat +"\\[\\/s\\]", "<s>$1</s>")
-            .replaceAll("\\[c=(.*)\\]"+ pat +"\\[\\/c\\]", "<i>Цитата: $1\n   $2</i>\n")
-            .replaceAll("\\[color=(.*)\\]"+ pat +"\\[\\/color\\]", "$2")
-            .replaceAll("\\[c\\]"+ pat +"\\[\\/c\\]", "<i>Цитата:\n   $1</i>\n")
-            .replaceAll("\\[url=(.*)\\]"+ pat +"\\[\\/url\\]", "<a href=\"$1\">$2</a>")
+
+            .replaceAll("\\[center\\]"+ pat +"\\[\\/center\\]", "$1")
             .replaceAll("\\[code\\]"+ pat +"\\[\\/code\\]", "<code>$1</code>")
-            .replaceAll("\\[code(.*)\\]"+ pat +"\\[\\/code\\]", "<code>$2</code>")
-            .replaceAll("\\[youtube\\]"+ pat +"\\[\\/youtube\\]", "$1")
-            .replaceAll("\\[spoiler\\]"+ pat +"\\[\\/spoiler\\]", "$1")
-            .replaceAll("\\[spoiler=(.*)\\]"+ pat +"\\[\\/spoiler\\]", "$1\n$2")
             .replaceAll("\\[img\\]"+ pat +"\\[\\/img\\]", "$1")
             .replaceAll("\\[mono\\]"+ pat +"\\[\\/mono\\]", "<code>$1</code>")
-            .replaceAll("\\[center\\]"+ pat +"\\[\\/center\\]", "$1");
+            .replaceAll("\\[spoiler\\]"+ pat +"\\[\\/spoiler\\]", "$1")
+            .replaceAll("\\[youtube\\]"+ pat +"\\[\\/youtube\\]", "$1")
+
+            .replaceAll("\\[c=(.*)\\]"+ pat +"\\[\\/c\\]", "<i>Цитата: $1\n   $2</i>\n")
+            .replaceAll("\\[code(.*)\\]"+ pat +"\\[\\/code\\]", "<code>$2</code>")
+            .replaceAll("\\[color=(.*)\\]"+ pat +"\\[\\/color\\]", "$2")
+            .replaceAll("\\[url=(.*)\\]"+ pat +"\\[\\/url\\]", "<a href=\"$1\">$2</a>")
+            .replaceAll("\\[spoiler=(.*)\\]"+ pat +"\\[\\/spoiler\\]", "$1\n$2");
     }
 }
