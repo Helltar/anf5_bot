@@ -63,26 +63,55 @@ public class Utils {
             .execute();
     }
 
+
+    private static String delBB(String text) {
+        return text
+            .replaceAll("\\[spoiler\\]", "")
+            .replaceAll("\\[\\/spoiler\\]", "")
+
+            .replaceAll("\\[youtube\\]", "")
+            .replaceAll("\\[\\/youtube\\]", "")
+
+            .replaceAll("\\[center\\]", "")
+            .replaceAll("\\[\\/center\\]", "")
+
+            .replaceAll("\\[i\\]", "")
+            .replaceAll("\\[\\/i\\]", "")
+
+            .replaceAll("\\[img\\]", "")
+            .replaceAll("\\[\\/img\\]", "")
+
+            .replaceAll("\\[color=(.*?)\\]", "")
+            .replaceAll("\\[\\/color\\]", "");
+    }
+
+    private static String cleanBB(String text) {
+        return text
+            .replaceAll("\\[b\\]", "")
+            .replaceAll("\\[c\\]", "")
+            .replaceAll("\\[s\\]", "")
+            .replaceAll("\\[code\\]", "")
+            .replaceAll("\\[mono\\]", "")
+            .replaceAll("\\[c=(.*?)\\]", "")
+            .replaceAll("\\[code(.*?)\\]", "")
+            .replaceAll("\\[url=(.*?)\\]", "")
+            .replaceAll("\\[spoiler=(.*?)\\]", "");
+    }
+
     public static String replaceBB(String text) {
         String pat = "((.|\r\n)*?)"; // TODO: (* only for spoiler)
 
-        return text
-            .replaceAll("\\[b\\]"+ pat +"\\[\\/b\\]", "<b>$1</b>")
-            .replaceAll("\\[c\\]"+ pat +"\\[\\/c\\]", "<i>Цитата:\n   $1</i>\n")
-            .replaceAll("\\[i\\]"+ pat +"\\[\\/i\\]", "$1")
-            .replaceAll("\\[s\\]"+ pat +"\\[\\/s\\]", "<s>$1</s>")
+        text = text
+            .replaceAll("\\[b\\]" + pat + "\\[\\/b\\]", "<b>$1</b>")
+            .replaceAll("\\[c\\]" + pat + "\\[\\/c\\]", "<i>Цитата:\n   $1</i>\n")
+            .replaceAll("\\[s\\]" + pat + "\\[\\/s\\]", "<s>$1</s>")
+            .replaceAll("\\[code\\]" + pat + "\\[\\/code\\]", "<code>$1</code>")
+            .replaceAll("\\[mono\\]" + pat + "\\[\\/mono\\]", "<code>$1</code>")
+            .replaceAll("\\[c=(.*?)\\]" + pat + "\\[\\/c\\]", "<i>Цитата: $1\n   $2</i>\n")
+            .replaceAll("\\[code(.*?)\\]" + pat + "\\[\\/code\\]", "<code>$2</code>")
+            .replaceAll("\\[url=(.*?)\\]" + pat + "\\[\\/url\\]", "<a href=\"$1\">$2</a>")
+            .replaceAll("\\[spoiler=(.*?)\\]" + pat + "\\[\\/spoiler\\]", "$1\n$2");
 
-            .replaceAll("\\[center\\]"+ pat +"\\[\\/center\\]", "$1")
-            .replaceAll("\\[code\\]"+ pat +"\\[\\/code\\]", "<code>$1</code>")
-            .replaceAll("\\[img\\]"+ pat +"\\[\\/img\\]", "$1")
-            .replaceAll("\\[mono\\]"+ pat +"\\[\\/mono\\]", "<code>$1</code>")
-            .replaceAll("\\[spoiler\\]"+ pat +"\\[\\/spoiler\\]", "$1")
-            .replaceAll("\\[youtube\\]"+ pat +"\\[\\/youtube\\]", "$1")
-
-            .replaceAll("\\[c=(.*)\\]"+ pat +"\\[\\/c\\]", "<i>Цитата: $1\n   $2</i>\n")
-            .replaceAll("\\[code(.*)\\]"+ pat +"\\[\\/code\\]", "<code>$2</code>")
-            .replaceAll("\\[color=(.*)\\]"+ pat +"\\[\\/color\\]", "$2")
-            .replaceAll("\\[url=(.*)\\]"+ pat +"\\[\\/url\\]", "<a href=\"$1\">$2</a>")
-            .replaceAll("\\[spoiler=(.*)\\]"+ pat +"\\[\\/spoiler\\]", "$1\n$2");
+        return cleanBB(delBB(text));
     }
 }

@@ -132,6 +132,10 @@ public class Anf5Bot {
             int postId = list.get(i).getPostId();
             String postLink = "<a href=\"" + Api.URL + "/forum/post" + postId + "\">";
 
+            if (text.length() > 1000) {
+               text = text.substring(0, 1000) + "\n\n" + postLink + "... открыть полный текст</a>";
+            }
+
             result = "<b># " + list.get(i).getTitle() + "\n\n"
                 + list.get(i).getUsername() + "</b> "
                 + postLink + "#"
