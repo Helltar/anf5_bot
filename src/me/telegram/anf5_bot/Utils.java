@@ -93,7 +93,9 @@ public class Utils {
             .replaceAll("\\[code\\]", "")
             .replaceAll("\\[mono\\]", "")
             .replaceAll("\\[c=(.*?)\\]", "")
-            .replaceAll("\\[code(.*?)\\]", "")
+            .replaceAll("\\[code=(.*?)\\]", "")
+            .replaceAll("\\[code (.*?)\\]", "")
+            .replaceAll("\\[Code (.*?)\\]", "")
             .replaceAll("\\[url=(.*?)\\]", "")
             .replaceAll("\\[spoiler=(.*?)\\]", "");
     }
@@ -108,7 +110,9 @@ public class Utils {
             .replaceAll("\\[code\\]" + pat + "\\[\\/code\\]", "<code>$1</code>")
             .replaceAll("\\[mono\\]" + pat + "\\[\\/mono\\]", "<code>$1</code>")
             .replaceAll("\\[c=(.*?)\\]" + pat + "\\[\\/c\\]", "<i>Цитата: $1\n   $2</i>\n")
-            .replaceAll("\\[code(.*?)\\]" + pat + "\\[\\/code\\]", "<code>$2</code>")
+            .replaceAll("\\[code=(.*?)\\]" + pat + "\\[\\/code\\]", "<code>$2</code>")
+            .replaceAll("\\[code (.*?)\\]" + pat + "\\[\\/code\\]", "<code>$2</code>")
+            .replaceAll("\\[Code (.*?)\\]" + pat + "\\[\\/code\\]", "<code>$2</code>")
             .replaceAll("\\[url=(.*?)\\]" + pat + "\\[\\/url\\]", "<a href=\"$1\">$2</a>")
             .replaceAll("\\[spoiler=(.*?)\\]" + pat + "\\[\\/spoiler\\]", "$1\n$2");
 
